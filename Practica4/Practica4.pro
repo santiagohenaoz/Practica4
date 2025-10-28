@@ -5,7 +5,9 @@ CONFIG -= qt
 
 SOURCES += \
         main.cpp \
+        redmanager.cpp \
         router.cpp
 
 HEADERS += \
+    redmanager.h \
     router.h
