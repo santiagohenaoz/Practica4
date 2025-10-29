@@ -15,6 +15,23 @@ void RedManager::agregarRouter(int id) {
     }
 }
 
+
+void RedManager::mostrarTodasLasConexiones() {
+    if (routers.empty()) {
+        std::cout << "No hay routers en la red actualmente." << std::endl;
+        return;
+    }
+
+    std::cout << "\n========= LISTADO DE TODAS LAS CONEXIONES =========\n";
+    for (auto it = routers.begin(); it != routers.end(); ++it) {
+        Router* router = it->second;
+        if (router) {
+            router->mostrarConexiones();
+            std::cout << "---------------------------------------------------\n";
+        }
+    }
+}
+
 void RedManager::eliminarRouter(int id) {
     auto it = routers.find(id);
     if (it != routers.end()) {

@@ -30,6 +30,7 @@ public:
     void generarRedesAleatorias();
     void leerArchivoYCrearRed();
     void mostrarConexionesDeRouter(int id);
+    void mostrarTodasLasConexiones();
 };
 
 #endif // REDMANAGER_H
