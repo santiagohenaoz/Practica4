@@ -22,7 +22,7 @@ void RedManager::mostrarTodasLasConexiones() {
         return;
     }
 
-    std::cout << "\n========= LISTADO DE TODAS LAS CONEXIONES =========\n";
+    std::cout << "\n          LISTADO DE TODAS LAS CONEXIONES \n";
     for (auto it = routers.begin(); it != routers.end(); ++it) {
         Router* router = it->second;
         if (router) {

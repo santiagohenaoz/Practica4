@@ -5,9 +5,8 @@ int main() {
     std::string option;
     int id, id1, id2, costo;
 
-    std::cout << "============================================" << std::endl;
     std::cout << "        SIMULADOR DE REDES - UDEA" << std::endl;
-    std::cout << "============================================" << std::endl;
+
     std::cout << "\nRed inicial tipo arbol + anillo + conexiones extra (8 routers):\n" << std::endl;
 
     // Crear routers iniciales
@@ -35,7 +34,7 @@ int main() {
     red.conectarRouters(7, 6, 5);
 
     // Mostrar red inicial (routers y conexiones reales)
-    //std::cout << "\nRouters existentes y sus conexiones:\n" << std::endl;
+
     red.mostrarTodasLasConexiones();
 
     while (true) {
