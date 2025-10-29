@@ -57,7 +57,7 @@ OBJECTS       = release/main.o \
 		release/redmanager.o \
 		release/router.o
 
-DIST          =  redmanager.h \
+DIST          = PRUEBAS.txt redmanager.h \
 		router.h ..\..\main.cpp \
 		..\..\redmanager.cpp \
 		..\..\router.cpp
@@ -108,7 +108,8 @@ compiler_clean:
 
 ####### Compile
 
-release/main.o: ../../main.cpp 
+release/main.o: ../../main.cpp ../../redmanager.h \
+		../../router.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\..\main.cpp
 
 release/redmanager.o: ../../redmanager.cpp ../../redmanager.h \

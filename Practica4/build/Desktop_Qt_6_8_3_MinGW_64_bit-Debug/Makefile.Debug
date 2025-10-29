@@ -57,7 +57,7 @@ OBJECTS       = debug/main.o \
 		debug/redmanager.o \
 		debug/router.o
 
-DIST          =  redmanager.h \
+DIST          = PRUEBAS.txt redmanager.h \
 		router.h ..\..\main.cpp \
 		..\..\redmanager.cpp \
 		..\..\router.cpp
@@ -108,7 +108,8 @@ compiler_clean:
 
 ####### Compile
 
-debug/main.o: ../../main.cpp 
+debug/main.o: ../../main.cpp ../../redmanager.h \
+		../../router.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\..\main.cpp
 
 debug/redmanager.o: ../../redmanager.cpp ../../redmanager.h \

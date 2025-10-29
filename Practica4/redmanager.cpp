@@ -118,6 +118,7 @@ void RedManager::borrarRedes() {
 void RedManager::generarRedesAleatorias() {
     borrarRedes();
     std::srand(std::time(nullptr));
+
     for (int i = 0; i < 5; ++i) agregarRouter(i);
     for (int i = 0; i < 5; ++i) {
         for (int j = i + 1; j < 5; ++j) {
@@ -125,12 +126,21 @@ void RedManager::generarRedesAleatorias() {
             conectarRouters(i, j, costo);
         }
     }
-    std::cout << "Se han generado 5 redes aleatorias." << std::endl;
+
+    std::cout << "Se han generado 5 redes aleatorias.\n" << std::endl;
+
+    std::cout << "Routers existentes y sus conexiones:" << std::endl;
+    for (auto& r : routers) {
+        r.second->mostrarConexiones();
+    }
 }
 
 void RedManager::leerArchivoYCrearRed() {
     borrarRedes();
-    const std::string nombreArchivo = "C:/Users/USER/Documents/GitHub/Labs_Informatica/Lab#4/Lab4/PRUEBAS.txt";
+
+    const std::string nombreArchivo =
+        "C:/Users/SYSTICOM SOPORTE/Documents/UNIVERSIDAD/INFO 2/QT/Practica 4/Practica4/Practica4/PRUEBAS.txt";
+
     std::ifstream archivo(nombreArchivo);
     if (!archivo.is_open()) {
         std::cerr << "No se pudo abrir el archivo." << std::endl;
@@ -142,6 +152,7 @@ void RedManager::leerArchivoYCrearRed() {
         std::istringstream ss(linea);
         std::string tipo;
         ss >> tipo;
+
         if (tipo == "Router") {
             int id;
             ss >> id;
@@ -155,6 +166,13 @@ void RedManager::leerArchivoYCrearRed() {
         }
     }
     archivo.close();
+
+    std::cout << "\nRed cargada desde archivo correctamente.\n" << std::endl;
+
+    std::cout << "Routers existentes y sus conexiones:" << std::endl;
+    for (auto& r : routers) {
+        r.second->mostrarConexiones();
+    }
 }
 
 void RedManager::mostrarConexionesDeRouter(int id) {

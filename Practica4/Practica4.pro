@@ -11,3 +11,6 @@ SOURCES += \
 HEADERS += \
     redmanager.h \
     router.h
+
+DISTFILES += \
+    PRUEBAS.txt

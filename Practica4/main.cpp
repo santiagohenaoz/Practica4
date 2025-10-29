@@ -1,42 +1,56 @@
-#include <iostream>
-#include <vector>
-#include <utility>
-#include <queue>
-#include <climits>
-#include <unordered_map>
-#include <algorithm>
-#include <stack>
-#include <cstdlib>
-#include <ctime>
-#include <fstream>
-#include <sstream>
-#include <string>
-
-
-std::unordered_map<int, Router*> routers;
-
-
+#include "redmanager.h"
 
 int main() {
-
-    // Ejemplo inicial de creación de routers y conexiones
-    agregarRouter(routers, 0);
-    agregarRouter(routers, 1);
-    agregarRouter(routers, 2);
-    agregarRouter(routers, 3);
-
-    conectarRouters(routers, 0, 1, 2);
-    conectarRouters(routers, 0, 2, 4);
-    conectarRouters(routers, 1, 2, 1);
-    conectarRouters(routers, 1, 3, 7);
-    conectarRouters(routers, 2, 3, 3);
-
+    RedManager red;
     std::string option;
     int id, id1, id2, costo;
 
-    // Bucle del menú de opciones
+    std::cout << "============================================" << std::endl;
+    std::cout << "        SIMULADOR DE REDES - UDEA" << std::endl;
+    std::cout << "============================================" << std::endl;
+    std::cout << "\nRed inicial tipo arbol + anillo + conexiones extra (8 routers):\n" << std::endl;
+
+    // Crear routers
+    for (int i = 0; i <= 7; ++i) {
+        red.agregarRouter(i);
+    }
+
+    // Conexiones tipo árbol
+    red.conectarRouters(0, 1, 2);
+    red.conectarRouters(0, 2, 4);
+    red.conectarRouters(1, 3, 3);
+    red.conectarRouters(1, 4, 5);
+
+    // Conexión tipo anillo
+    red.conectarRouters(4, 0, 6);
+
+    // Nuevas conexiones con router 2
+    red.conectarRouters(2, 5, 2);
+    red.conectarRouters(2, 6, 3);
+
+    // Router 7 conectado a 3, 4, 5, 6
+    red.conectarRouters(7, 3, 4);
+    red.conectarRouters(7, 4, 4);
+    red.conectarRouters(7, 5, 5);
+    red.conectarRouters(7, 6, 5);
+
+    // Mostrar routers y conexiones al inicio
+    std::cout << "\nRouters existentes y sus conexiones:\n" << std::endl;
+    for (int i = 0; i <= 7; ++i) {
+        red.mostrarConexionesDeRouter(i);
+    }
+
     while (true) {
-        std::cout << "\nMenu:\n1. Agregar Router\n2. Eliminar Router\n3. Conectar Routers\n4. Calcular distancia mas corta\n5. Mostrar camino\n6. Ver conexiones de un router\n7. Borrar y generar redes aleatorias\n8. Leer archivo y crear red\n9. Salir\n";
+        std::cout << "\nMenu:\n"
+                  << "1. Agregar Router\n"
+                  << "2. Eliminar Router\n"
+                  << "3. Conectar Routers\n"
+                  << "4. Calcular distancia mas corta\n"
+                  << "5. Mostrar camino\n"
+                  << "6. Ver conexiones de un router\n"
+                  << "7. Borrar y generar redes aleatorias\n"
+                  << "8. Leer archivo y crear red\n"
+                  << "9. Salir\n";
         std::cin >> option;
 
         if (option.length() != 1) {
@@ -48,53 +62,44 @@ int main() {
         case '1':
             std::cout << "Ingrese ID del nuevo Router: ";
             std::cin >> id;
-            agregarRouter(routers, id);
+            red.agregarRouter(id);
             break;
         case '2':
             std::cout << "Ingrese ID del Router a eliminar: ";
             std::cin >> id;
-            eliminarRouter(routers, id);
+            red.eliminarRouter(id);
             break;
         case '3':
             std::cout << "Ingrese ID del Router de origen, ID del Router de destino y el costo: ";
             std::cin >> id1 >> id2 >> costo;
-            conectarRouters(routers, id1, id2, costo);
+            red.conectarRouters(id1, id2, costo);
             break;
         case '4':
             std::cout << "Ingrese ID del Router de origen e ID del Router de destino: ";
             std::cin >> id1 >> id2;
-            calcularYMostrarCamino(routers, id1, id2);
+            red.calcularYMostrarCamino(id1, id2);
             break;
         case '5':
             std::cout << "Ingrese ID del Router destino: ";
             std::cin >> id;
-            mostrarCamino(routers[id]);
+            red.mostrarConexionesDeRouter(id);
             break;
         case '6':
             std::cout << "Ingrese ID del Router para ver sus conexiones: ";
             std::cin >> id;
-            if (routers.find(id) != routers.end()) {
-                routers[id]->mostrarConexiones();
-            } else {
-                std::cout << "Router no encontrado." << std::endl;
-            }
+            red.mostrarConexionesDeRouter(id);
             break;
         case '7':
-            generarRedesAleatorias(routers);
+            red.generarRedesAleatorias();
             break;
         case '8':
-            leerArchivoYCrearRed(routers);
+            red.leerArchivoYCrearRed();
             break;
         case '9':
-            borrarRedes(routers);
+            red.borrarRedes();
             return 0;
         default:
             std::cout << "Opcion invalida." << std::endl;
         }
     }
-
-    return 0;
-
-
-
 }
